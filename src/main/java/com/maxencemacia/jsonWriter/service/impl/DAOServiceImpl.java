@@ -26,7 +26,7 @@ public class DAOServiceImpl implements DAOService {
         try {
             return Optional.of(persistenceService.readModels().stream()
                     .filter(model -> Objects.equals(model.getId(), id))
-                    .toList().getFirst());
+                    .toList().get(0));
         } catch (IOException e) {
             System.out.println("Exception : " + e);
         }
@@ -38,7 +38,7 @@ public class DAOServiceImpl implements DAOService {
         try {
             return Optional.of(persistenceService.readModels().stream()
                     .filter(model -> Objects.equals(model.getName(), name))
-                    .toList().getFirst());
+                    .toList().get(0));
         } catch (IOException e) {
             System.out.println("Exception : " + e);
         }
@@ -56,7 +56,7 @@ public class DAOServiceImpl implements DAOService {
             if (models.isEmpty()) {
                 model.setId(1L);
             } else {
-                Model lastModel = models.getLast();
+                Model lastModel = models.get(models.size() - 1);
                 model.setId(lastModel.getId() + 1);
             }
             models.add(model);

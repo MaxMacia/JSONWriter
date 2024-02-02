@@ -1,5 +1,7 @@
 package com.maxencemacia.jsonWriter;
 
+import com.maxencemacia.jsonWriter.controller.AddModelController;
+import com.maxencemacia.jsonWriter.controller.DisplayAddModelFormController;
 import com.maxencemacia.jsonWriter.controller.DisplayAskFoAttributesNbFormController;
 import com.maxencemacia.jsonWriter.controller.DisplayModelController;
 import com.maxencemacia.jsonWriter.view.View;
@@ -15,6 +17,8 @@ public class JsonWriterApplication {
 		View view = new View();
 		DisplayModelController displayModelController = new DisplayModelController(view);
 		DisplayAskFoAttributesNbFormController displayAskFoAttributesNbFormController = new DisplayAskFoAttributesNbFormController(view);
+		DisplayAddModelFormController displayAddModelFormController = new DisplayAddModelFormController(view);
+		AddModelController addModelController = new AddModelController(view);
 
 		Component[] modelButtons = view.getModelListContainer().getComponents();
 		for (Component component : modelButtons) {
@@ -23,6 +27,8 @@ public class JsonWriterApplication {
 			}
 		}
 		view.getAddModel().addActionListener(displayAskFoAttributesNbFormController);
+		view.getValidateAttributeNb().addActionListener(displayAddModelFormController);
+		view.getValidateAttrbutes().addActionListener(addModelController);
 	}
 
 }

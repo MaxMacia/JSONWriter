@@ -8,16 +8,20 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 public class View {
+    private Model currentModel;
     private JFrame window;
-    private JPanel modelListContainer, screenContainer, buttonsContainer;
-    private JLabel howManyAttributesLabel;
-    private TextField howManyAttributesInput;
-    private JButton addModel, writeObject, writeListOfObject, validateAttributeNb;
+    private JPanel modelListContainer, screenContainer, buttonsContainer, updeleteButtonContainer;
+    private JLabel howManyAttributesLabel, modelNameLabel;
+    private TextField howManyAttributesInput, modelNameInput;
+    private List<TextField> inputList;
+    private JButton addModel, writeObject, writeListOfObject, validateAttributeNb, validateAttrbutes, firstUpdate, secondUpdate, delete;
+    private GridLayout gridLayoutAttributeNb;
     private final DAOService daoService = new DAOServiceImpl();
     public View() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -34,14 +38,29 @@ public class View {
         screenContainer = new JPanel();
         buttonsContainer = new JPanel();
         buttonsContainer.setLayout(new GridLayout(3, 1));
+        updeleteButtonContainer = new JPanel();
 
         addModel = new JButton("Ajouter un modèle");
         writeObject = new JButton("Ecrire un objet en JSON");
         writeListOfObject = new JButton("Ecrire une liste d'objet en JSON");
         validateAttributeNb = new JButton("Valider");
+        validateAttrbutes = new JButton("Valider");
+        firstUpdate = new JButton("éditer");
+        secondUpdate = new JButton("éditer");
+        delete = new JButton("supprimer");
 
         howManyAttributesLabel = new JLabel("Combien d'attributs?");
         howManyAttributesInput = new TextField(12);
+
+        modelNameLabel = new JLabel("Nom du modèle :");
+        modelNameInput = new TextField(12);
+
+        inputList = new ArrayList<>();
+
+        gridLayoutAttributeNb = new GridLayout(3, 1);
+
+        updeleteButtonContainer.add(firstUpdate);
+        updeleteButtonContainer.add(delete);
 
         buttonsContainer.add(addModel);
         buttonsContainer.add(writeObject);
@@ -58,7 +77,7 @@ public class View {
         this.window.show();
     }
 
-    private void displayModelList() {
+    public void displayModelList() {
         List<Model> models = daoService.getAllModels();
         modelListContainer.removeAll();
         modelListContainer.setLayout(new GridLayout(models.size(), 1));

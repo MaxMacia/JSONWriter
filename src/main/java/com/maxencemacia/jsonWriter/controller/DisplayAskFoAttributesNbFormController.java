@@ -14,7 +14,8 @@ public class DisplayAskFoAttributesNbFormController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         view.getScreenContainer().removeAll();
         view.getHowManyAttributesInput().setText("");
-        view.getScreenContainer().setLayout(new GridLayout(3, 1));
+        view.getGridLayoutAttributeNb().setRows(3);
+        view.getScreenContainer().setLayout(view.getGridLayoutAttributeNb());
         view.getScreenContainer().add(view.getHowManyAttributesLabel());
         view.getScreenContainer().add(view.getHowManyAttributesInput());
         view.getScreenContainer().add(view.getValidateAttributeNb());
