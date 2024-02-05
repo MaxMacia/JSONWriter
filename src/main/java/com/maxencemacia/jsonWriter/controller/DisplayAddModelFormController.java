@@ -19,7 +19,8 @@ public class DisplayAddModelFormController implements ActionListener {
             view.getScreenContainer().removeAll();
             view.getHowManyAttributesInput().setText("");
             view.getModelNameInput().setText("");
-            view.getScreenContainer().setLayout(new GridLayout(2 * (attributesNb + 1) + 1, 1));
+            view.getGridLayoutAddModelForm().setRows(2 * (attributesNb + 1) + 1);
+            view.getScreenContainer().setLayout(view.getGridLayoutAddModelForm());
             view.getScreenContainer().add(view.getModelNameLabel());
             view.getScreenContainer().add(view.getModelNameInput());
             for (int i = 0; i < attributesNb; i++) {
@@ -44,9 +45,9 @@ public class DisplayAddModelFormController implements ActionListener {
                 view.getScreenContainer().add(inputContainer);
             }
             view.getScreenContainer().add(view.getValidateAttrbutes());
-            this.view.getScreenContainer().updateUI();
-            this.view.getWindow().pack();
-            this.view.getWindow().setVisible(true);
+            view.getScreenContainer().updateUI();
+            view.getWindow().pack();
+            view.getWindow().setVisible(true);
         } catch(Exception ex) {
             System.out.println(ex);
             view.getHowManyAttributesInput().setText("");
@@ -54,9 +55,9 @@ public class DisplayAddModelFormController implements ActionListener {
                 view.getGridLayoutAttributeNb().setRows(view.getGridLayoutAttributeNb().getRows() + 1);
                 view.getScreenContainer().setLayout(view.getGridLayoutAttributeNb());
                 view.getScreenContainer().add(new JLabel("Veuillez entrer un nombre"));
-                this.view.getScreenContainer().updateUI();
-                this.view.getWindow().pack();
-                this.view.getWindow().setVisible(true);
+                view.getScreenContainer().updateUI();
+                view.getWindow().pack();
+                view.getWindow().setVisible(true);
             }
         }
     }

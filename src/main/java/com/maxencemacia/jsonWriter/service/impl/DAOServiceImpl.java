@@ -75,6 +75,9 @@ public class DAOServiceImpl implements DAOService {
                     .toList()
             );
             models.add(model);
+            models.stream()
+                    .sorted(Comparator.comparing(Model::getId))
+                    .toList();
             persistenceService.writeModel(models);
         } catch (IOException e) {
             System.out.println("Exception : " + e);

@@ -17,10 +17,14 @@ public class DisplayUpdateFormController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (view.getCurrentModel() != null) {
             Set<String> keySet = view.getCurrentModel().getAttributes().keySet();
+            view.getFirstUpdate().removeActionListener(view.getDisplayUpdateFormController());
+            view.getDelete().removeActionListener(view.getDeleteModelController());
+            view.getSecondUpdate().removeActionListener(view.getUpdateModelController());
             view.getScreenContainer().removeAll();
             view.getHowManyAttributesInput().setText("");
             view.getModelNameInput().setText("");
-            view.getScreenContainer().setLayout(new GridLayout(2 * (keySet.size() + 1) + 1, 1));
+            view.getGridLayoutUpdateModelForm().setRows(2 * (keySet.size() + 1) + 1);
+            view.getScreenContainer().setLayout(view.getGridLayoutUpdateModelForm());
             view.getScreenContainer().add(view.getModelNameLabel());
             view.getModelNameInput().setText(view.getCurrentModel().getName());
             view.getScreenContainer().add(view.getModelNameInput());
@@ -32,7 +36,7 @@ public class DisplayUpdateFormController implements ActionListener {
                 labelContainer.add(new JLabel("Type de l'attribut (S/N)"));
 
                 JPanel inputContainer = new JPanel();
-                inputContainer.setLayout(new GridLayout(1, 2));
+                inputContainer.setLayout(new GridLayout(1, 3));
 
                 TextField attributeName = new TextField(key);
                 TextField attributeType;
@@ -45,6 +49,9 @@ public class DisplayUpdateFormController implements ActionListener {
 
                 inputContainer.add(attributeName);
                 inputContainer.add(attributeType);
+                JButton button = new JButton("supprimer");
+                button.setName(key);
+                inputContainer.add(button);
 
                 view.getInputList().add(attributeName);
                 view.getInputList().add(attributeType);
@@ -52,12 +59,13 @@ public class DisplayUpdateFormController implements ActionListener {
                 view.getScreenContainer().add(labelContainer);
                 view.getScreenContainer().add(inputContainer);
             }
-            UpdateModelController updateModelController = new UpdateModelController(view);
-            view.getSecondUpdate().addActionListener(updateModelController);
-            view.getScreenContainer().add(view.getSecondUpdate());
-            this.view.getScreenContainer().updateUI();
-            this.view.getWindow().pack();
-            this.view.getWindow().setVisible(true);
+
+            view.getSecondUpdate().addActionListener(view.getUpdateModelController());
+            view.getAddAttribute().addActionListener(view.getAddAttributeController());
+            view.getScreenContainer().add(view.getUpaddButtonContainer());
+            view.getScreenContainer().updateUI();
+            view.getWindow().pack();
+            view.getWindow().setVisible(true);
         } else {
             view.getScreenContainer().add(new JLabel("Une erreur est survenu"));
         }

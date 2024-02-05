@@ -3,7 +3,6 @@ package com.maxencemacia.jsonWriter.controller;
 import com.maxencemacia.jsonWriter.view.View;
 import lombok.AllArgsConstructor;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,8 +18,8 @@ public class DisplayAskFoAttributesNbFormController implements ActionListener {
         view.getScreenContainer().add(view.getHowManyAttributesLabel());
         view.getScreenContainer().add(view.getHowManyAttributesInput());
         view.getScreenContainer().add(view.getValidateAttributeNb());
-        this.view.getScreenContainer().updateUI();
-        this.view.getWindow().pack();
-        this.view.getWindow().setVisible(true);
+        view.getScreenContainer().updateUI();
+        view.getWindow().pack();
+        view.getWindow().setVisible(true);
     }
 }

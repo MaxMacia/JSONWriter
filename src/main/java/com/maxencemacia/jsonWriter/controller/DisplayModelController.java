@@ -15,6 +15,8 @@ public class DisplayModelController implements ActionListener {
     private View view;
     @Override
     public void actionPerformed(ActionEvent e) {
+        view.getFirstUpdate().removeActionListener(view.getDisplayUpdateFormController());
+        view.getDelete().removeActionListener(view.getDeleteModelController());
         view.getScreenContainer().removeAll();
         view.setCurrentModel(null);
         JButton button = (JButton) e.getSource();
@@ -36,16 +38,14 @@ public class DisplayModelController implements ActionListener {
             view.getScreenContainer().add(new JLabel("}"));
             view.getScreenContainer().add(view.getUpdeleteButtonContainer());
 
-            DisplayUpdateFormController displayUpdateFormController = new DisplayUpdateFormController(view);
-            DeleteModelController deleteModelController = new DeleteModelController(view);
-            view.getFirstUpdate().addActionListener(displayUpdateFormController);
-            view.getDelete().addActionListener(deleteModelController);
+            view.getFirstUpdate().addActionListener(view.getDisplayUpdateFormController());
+            view.getDelete().addActionListener(view.getDeleteModelController());
 
         } else {
             view.getScreenContainer().add(new JLabel("Une erreur est survenu"));
         }
         view.getScreenContainer().updateUI();
-        this.view.getWindow().setVisible(true);
-        this.view.getWindow().pack();
+        view.getWindow().setVisible(true);
+        view.getWindow().pack();
     }
 }

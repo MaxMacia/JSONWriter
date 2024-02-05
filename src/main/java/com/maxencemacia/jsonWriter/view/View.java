@@ -1,5 +1,6 @@
 package com.maxencemacia.jsonWriter.view;
 
+import com.maxencemacia.jsonWriter.controller.*;
 import com.maxencemacia.jsonWriter.model.Model;
 import com.maxencemacia.jsonWriter.service.DAOService;
 import com.maxencemacia.jsonWriter.service.impl.DAOServiceImpl;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +18,13 @@ import java.util.List;
 public class View {
     private Model currentModel;
     private JFrame window;
-    private JPanel modelListContainer, screenContainer, buttonsContainer, updeleteButtonContainer;
+    private JPanel modelListContainer, screenContainer, buttonsContainer, updeleteButtonContainer, upaddButtonContainer;
     private JLabel howManyAttributesLabel, modelNameLabel;
     private TextField howManyAttributesInput, modelNameInput;
     private List<TextField> inputList;
-    private JButton addModel, writeObject, writeListOfObject, validateAttributeNb, validateAttrbutes, firstUpdate, secondUpdate, delete;
-    private GridLayout gridLayoutAttributeNb;
+    private JButton addModel, writeObject, writeListOfObject, validateAttributeNb, validateAttrbutes, firstUpdate, secondUpdate, delete, addAttribute;
+    private GridLayout gridLayoutAttributeNb, gridLayoutAddModelForm, gridLayoutUpdateModelForm;
+    private ActionListener displayModelController, displayAskFoAttributesNbFormController, displayAddModelFormController, addModelController, displayUpdateFormController, deleteModelController, updateModelController, addAttributeController, deleteAttribute;
     private final DAOService daoService = new DAOServiceImpl();
     public View() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -39,6 +42,17 @@ public class View {
         buttonsContainer = new JPanel();
         buttonsContainer.setLayout(new GridLayout(3, 1));
         updeleteButtonContainer = new JPanel();
+        upaddButtonContainer = new JPanel();
+
+        displayModelController= new DisplayModelController(this);
+        displayAskFoAttributesNbFormController = new DisplayAskFoAttributesNbFormController(this);
+        displayAddModelFormController = new DisplayAddModelFormController(this);
+        addModelController = new AddModelController(this);
+        displayUpdateFormController = new DisplayUpdateFormController(this);
+        deleteModelController = new DeleteModelController(this);
+        updateModelController = new UpdateModelController(this);
+        addAttributeController = new AddAttributeController(this);
+        deleteAttribute = new DeleteAttribute(this);
 
         addModel = new JButton("Ajouter un modèle");
         writeObject = new JButton("Ecrire un objet en JSON");
@@ -48,6 +62,7 @@ public class View {
         firstUpdate = new JButton("éditer");
         secondUpdate = new JButton("éditer");
         delete = new JButton("supprimer");
+        addAttribute = new JButton("Ajouter un attribut");
 
         howManyAttributesLabel = new JLabel("Combien d'attributs?");
         howManyAttributesInput = new TextField(12);
@@ -58,9 +73,14 @@ public class View {
         inputList = new ArrayList<>();
 
         gridLayoutAttributeNb = new GridLayout(3, 1);
+        gridLayoutAddModelForm = new GridLayout(3, 1);
+        gridLayoutUpdateModelForm = new GridLayout(3, 1);
 
         updeleteButtonContainer.add(firstUpdate);
         updeleteButtonContainer.add(delete);
+
+        upaddButtonContainer.add(secondUpdate);
+        upaddButtonContainer.add(addAttribute);
 
         buttonsContainer.add(addModel);
         buttonsContainer.add(writeObject);

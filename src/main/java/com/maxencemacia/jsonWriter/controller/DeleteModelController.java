@@ -14,21 +14,29 @@ public class DeleteModelController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (view.getCurrentModel() != null) {
+            view.getFirstUpdate().removeActionListener(view.getDisplayUpdateFormController());
+            view.getDelete().removeActionListener(view.getDeleteModelController());
             view.getDaoService().deleteModel(view.getCurrentModel().getId());
-            view.getScreenContainer().removeAll();
-
-            view.displayModelList();
-            DisplayModelController displayModelController = new DisplayModelController(view);
             Component[] modelButtons = view.getModelListContainer().getComponents();
             for (Component component : modelButtons) {
                 if (component instanceof JButton button) {
-                    button.addActionListener(displayModelController);
+                    button.removeActionListener(view.getDisplayModelController());
+                }
+            }
+            view.getScreenContainer().removeAll();
+
+            view.displayModelList();
+
+            modelButtons = view.getModelListContainer().getComponents();
+            for (Component component : modelButtons) {
+                if (component instanceof JButton button) {
+                    button.addActionListener(view.getDisplayModelController());
                 }
             }
 
-            this.view.getScreenContainer().updateUI();
-            this.view.getWindow().pack();
-            this.view.getWindow().setVisible(true);
+            view.getScreenContainer().updateUI();
+            view.getWindow().pack();
+            view.getWindow().setVisible(true);
         } else {
             view.getScreenContainer().add(new JLabel("Une erreur est survenu"));
         }
