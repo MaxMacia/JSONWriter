@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor
-public class UpdateModelController implements ActionListener {
+public class WriteObjectController implements ActionListener {
     private View view;
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -26,34 +26,25 @@ public class UpdateModelController implements ActionListener {
                         button.removeActionListener(view.getDisplayModelController());
                     }
                 }
-                view.getSecondUpdate().removeActionListener(view.getUpdateModelController());
-                String newModelName = view.getModelNameInput().getText();
-                if (newModelName.equals("")) {
-                    throw new AppException(Error.MISSING_NAME);
-                }
-
+                Model model = view.getCurrentModel();
                 Map<String, Object> map = new HashMap<>();
+
                 for (int i = 0; i < view.getInputList().size(); i++) {
-                    if (i % 2 == 1)
+                    if (i % 2 == 0)
                         continue;
                     if (((TextField) view.getInputList().get(i)).getText().equals(""))
-                        throw new AppException(Error.MISSING_ATTRIBUTE_NAME);
-                    if (((TextField) view.getInputList().get(i + 1)).getText().equals("S")) {
-                        map.put(((TextField) view.getInputList().get(i)).getText(), "S");
-                    } else if (((TextField) view.getInputList().get(i + 1)).getText().equals("N")) {
-                        map.put(((TextField) view.getInputList().get(i)).getText(), 0);
-                    } else
-                        throw new AppException(Error.TYPE_ERROR);
+                        throw new AppException(Error.MISSING_VALUE);
+                    if (model.getAttributes().get(view.getInputList().get(i).getName()).equals(0)) {
+                        map.put(view.getInputList().get(i).getName(), Integer.parseInt(((TextField) view.getInputList().get(i)).getText()));
+                    } else {
+                        map.put(view.getInputList().get(i).getName(), ((TextField) view.getInputList().get(i)).getText());
+                    }
                 }
                 view.getInputList().removeAll(view.getInputList());
 
-                view.getDaoService().updateModel(
-                        Model.builder()
-                                .id(view.getCurrentModel().getId())
-                                .name(newModelName)
-                                .attributes(map)
-                                .build()
-                );
+                model.setAttributes(map);
+
+                view.getJsonService().writeAsJson(model);
 
                 view.getScreenContainer().removeAll();
                 view.getModelNameInput().setText("");
@@ -70,20 +61,16 @@ public class UpdateModelController implements ActionListener {
                 view.getScreenContainer().updateUI();
                 view.getWindow().pack();
                 view.getWindow().setVisible(true);
+
             } else {
                 view.getScreenContainer().add(new JLabel("Une erreur est survenu"));
             }
         } catch (AppException ex) {
             System.out.println(ex);
-            view.getGridLayoutUpdateModelForm().setRows(view.getGridLayoutUpdateModelForm().getRows() + 1);
-            view.getScreenContainer().setLayout(view.getGridLayoutUpdateModelForm());
-            if (ex.getError().equals(Error.MISSING_NAME)) {
-                view.getScreenContainer().add(new JLabel("Veuillez entrer un nom du modèle"));
-            } else if (ex.getError().equals(Error.MISSING_ATTRIBUTE_NAME)) {
-                view.getScreenContainer().add(new JLabel("Veuillez entrer un nom d'attribut"));
-            } else {
-                view.getScreenContainer().add(new JLabel("Le type doit être S ou N"));
-            }
+            view.getGridLayoutWriteObjectForm().setRows(view.getGridLayoutWriteObjectForm().getRows() + 1);
+            view.getScreenContainer().setLayout(view.getGridLayoutWriteObjectForm());
+
+            view.getScreenContainer().add(new JLabel("Veuillez entrer une valeur pour l'attribut"));
 
             view.displayModelList();
 

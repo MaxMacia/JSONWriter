@@ -35,12 +35,12 @@ public class AddModelController implements ActionListener {
             for (int i = 0; i < view.getInputList().size(); i++) {
                 if (i % 2 == 1)
                     continue;
-                if (view.getInputList().get(i).getText().equals(""))
+                if (((TextField) view.getInputList().get(i)).getText().equals(""))
                     throw new AppException(Error.MISSING_ATTRIBUTE_NAME);
-                if (view.getInputList().get(i + 1).getText().equalsIgnoreCase("S")) {
-                    map.put(view.getInputList().get(i).getText(), "S");
-                } else if (view.getInputList().get(i + 1).getText().equalsIgnoreCase("N")) {
-                    map.put(view.getInputList().get(i).getText(), 0);
+                if (((TextField) view.getInputList().get(i + 1)).getText().equalsIgnoreCase("S")) {
+                    map.put(((TextField) view.getInputList().get(i)).getText(), "S");
+                } else if (((TextField) view.getInputList().get(i + 1)).getText().equalsIgnoreCase("N")) {
+                    map.put(((TextField) view.getInputList().get(i)).getText(), 0);
                 } else
                     throw new AppException(Error.TYPE_ERROR);
             }

@@ -2,14 +2,14 @@ package com.maxencemacia.jsonWriter.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maxencemacia.jsonWriter.model.Model;
-import com.maxencemacia.jsonWriter.service.JsonService;
+import com.maxencemacia.jsonWriter.service.JSONService;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class JsonServiceImpl implements JsonService {
+public class JSONServiceImpl implements JSONService {
     private final String DESTINATION = "target/data.json";
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override

@@ -4,7 +4,7 @@ import com.maxencemacia.jsonWriter.model.Model;
 
 import java.util.List;
 
-public interface JsonService {
+public interface JSONService {
     /*
     * Writes an object as JSON object
     * */

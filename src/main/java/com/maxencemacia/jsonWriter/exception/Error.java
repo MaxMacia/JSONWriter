@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum Error {
     MISSING_NAME("Le champs nom du modèle doit être renseigné"),
     MISSING_ATTRIBUTE_NAME("Le champs nom de l'attribut doit être renseigné"),
+    MISSING_VALUE("L'attribut doit avoir une valeur"),
     TYPE_ERROR("Le type doit être string ou number");
 
     private final String message;
