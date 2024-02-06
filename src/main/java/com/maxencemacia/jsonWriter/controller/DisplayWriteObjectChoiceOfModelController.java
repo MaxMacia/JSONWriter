@@ -23,10 +23,20 @@ public class DisplayWriteObjectChoiceOfModelController implements ActionListener
 
         view.getScreenContainer().add(new JLabel("Veuillez choisir un modèle"));
 
-        modelButtons = view.getModelListContainer().getComponents();
-        for (Component component : modelButtons) {
-            if (component instanceof JButton button) {
-                button.addActionListener(view.getDisplayWriteObjectFormController());
+        JButton button = (JButton) e.getSource();
+        if (button.getText().equals("Ecrire un objet en JSON")) {
+            modelButtons = view.getModelListContainer().getComponents();
+            for (Component component : modelButtons) {
+                if (component instanceof JButton jButton) {
+                    jButton.addActionListener(view.getDisplayWriteObjectFormController());
+                }
+            }
+        } else {
+            modelButtons = view.getModelListContainer().getComponents();
+            for (Component component : modelButtons) {
+                if (component instanceof JButton jButton) {
+                    jButton.addActionListener(view.getDisplayAskForNbOfObjectsController());
+                }
             }
         }
 

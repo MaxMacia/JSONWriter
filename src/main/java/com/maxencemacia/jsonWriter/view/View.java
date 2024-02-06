@@ -21,12 +21,12 @@ public class View {
     private Model currentModel;
     private JFrame window;
     private JPanel modelListContainer, screenContainer, buttonsContainer, updeleteButtonContainer, upaddButtonContainer;
-    private JLabel howManyAttributesLabel, modelNameLabel;
-    private TextField howManyAttributesInput, modelNameInput;
+    private JLabel howManyAttributesLabel, modelNameLabel, howManyObjLabel;
+    private TextField howManyAttributesInput, modelNameInput, howManyObjInput;
     private List<Component> inputList;
-    private JButton addModel, writeObject, writeListOfObject, validateAttributeNb, validateAttrbutes, firstUpdate, secondUpdate, delete, addAttribute, write;
-    private GridLayout gridLayoutAttributeNb, gridLayoutAddModelForm, gridLayoutUpdateModelForm, gridLayoutWriteObjectForm;
-    private ActionListener displayModelController, displayAskFoAttributesNbFormController, displayAddModelFormController, addModelController, displayUpdateFormController, deleteModelController, updateModelController, addAttributeController, deleteAttribute, displayWriteObjectChoiceOfModelController, displayWriteObjectFormController, writeObjectController;
+    private JButton addModel, writeObject, writeListOfObject, validateAttributeNb, validateAttrbutes, firstUpdate, secondUpdate, delete, addAttribute, write, validateNbObj, nextObj;
+    private GridLayout gridLayoutAttributeNb, gridLayoutAddModelForm, gridLayoutUpdateModelForm, gridLayoutWriteObjectForm, gridLayoutObjNb;
+    private ActionListener displayModelController, displayAskFoAttributesNbFormController, displayAddModelFormController, addModelController, displayUpdateFormController, deleteModelController, updateModelController, addAttributeController, deleteAttribute, displayWriteObjectChoiceOfModelController, displayWriteObjectFormController, writeObjectController, displayAskForNbOfObjectsController, displayWriteListOfObjectsFormController;
     private final DAOService daoService = new DAOServiceImpl();
     private final JSONService jsonService = new JSONServiceImpl();
     public View() {
@@ -59,17 +59,21 @@ public class View {
         displayWriteObjectChoiceOfModelController = new DisplayWriteObjectChoiceOfModelController(this);
         displayWriteObjectFormController = new DisplayWriteObjectFormController(this);
         writeObjectController = new WriteObjectController(this);
+        displayAskForNbOfObjectsController = new DisplayAskForNbOfObjectsController(this);
+        displayWriteListOfObjectsFormController = new DisplayWriteListOfObjectsFormController(this, 0);
 
         addModel = new JButton("Ajouter un modèle");
         writeObject = new JButton("Ecrire un objet en JSON");
         writeListOfObject = new JButton("Ecrire une liste d'objet en JSON");
         validateAttributeNb = new JButton("Valider");
         validateAttrbutes = new JButton("Valider");
+        validateNbObj = new JButton("Valider");
         firstUpdate = new JButton("éditer");
         secondUpdate = new JButton("éditer");
         delete = new JButton("supprimer");
         addAttribute = new JButton("Ajouter un attribut");
         write = new JButton("écrire");
+        nextObj = new JButton("prochain objet");
 
         Component[] modelButtons = modelListContainer.getComponents();
         for (Component component : modelButtons) {
@@ -80,7 +84,9 @@ public class View {
         addModel.addActionListener(displayAskFoAttributesNbFormController);
         validateAttributeNb.addActionListener(displayAddModelFormController);
         validateAttrbutes.addActionListener(addModelController);
+        validateNbObj.addActionListener(displayWriteListOfObjectsFormController);
         writeObject.addActionListener(displayWriteObjectChoiceOfModelController);
+        writeListOfObject.addActionListener(displayWriteObjectChoiceOfModelController);
 
         howManyAttributesLabel = new JLabel("Combien d'attributs?");
         howManyAttributesInput = new TextField(12);
@@ -88,12 +94,16 @@ public class View {
         modelNameLabel = new JLabel("Nom du modèle :");
         modelNameInput = new TextField(12);
 
+        howManyObjLabel = new JLabel("Combien d'objets?");
+        howManyObjInput = new TextField(12);
+
         inputList = new ArrayList<>();
 
         gridLayoutAttributeNb = new GridLayout(3, 1);
         gridLayoutAddModelForm = new GridLayout(3, 1);
         gridLayoutUpdateModelForm = new GridLayout(3, 1);
         gridLayoutWriteObjectForm = new GridLayout(3, 1);
+        gridLayoutObjNb = new GridLayout(3, 1);
 
         updeleteButtonContainer.add(firstUpdate);
         updeleteButtonContainer.add(delete);
