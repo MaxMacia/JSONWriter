@@ -20,6 +20,7 @@ public class UpdateModelController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         try {
             if (view.getCurrentModel() != null) {
+                view.getFieldList().removeAll(view.getFieldList());
                 Component[] modelButtons = view.getModelListContainer().getComponents();
                 for (Component component : modelButtons) {
                     if (component instanceof JButton button) {

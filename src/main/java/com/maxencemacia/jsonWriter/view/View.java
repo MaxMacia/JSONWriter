@@ -19,6 +19,7 @@ public class View {
     private Model currentModel;
     private JFrame window;
     private JPanel modelListContainer, screenContainer, buttonsContainer, updeleteButtonContainer, upaddButtonContainer;
+    private List<JPanel> fieldList;
     private JLabel howManyAttributesLabel, modelNameLabel;
     private TextField howManyAttributesInput, modelNameInput;
     private List<TextField> inputList;
@@ -71,6 +72,7 @@ public class View {
         modelNameInput = new TextField(12);
 
         inputList = new ArrayList<>();
+        fieldList = new ArrayList<>();
 
         gridLayoutAttributeNb = new GridLayout(3, 1);
         gridLayoutAddModelForm = new GridLayout(3, 1);

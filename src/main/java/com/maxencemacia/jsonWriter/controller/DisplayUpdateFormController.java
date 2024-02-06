@@ -51,13 +51,20 @@ public class DisplayUpdateFormController implements ActionListener {
                 inputContainer.add(attributeType);
                 JButton button = new JButton("supprimer");
                 button.setName(key);
+                button.addActionListener(view.getDeleteAttribute());
                 inputContainer.add(button);
 
                 view.getInputList().add(attributeName);
                 view.getInputList().add(attributeType);
 
-                view.getScreenContainer().add(labelContainer);
-                view.getScreenContainer().add(inputContainer);
+                JPanel labelInputContainer = new JPanel();
+                labelInputContainer.setLayout(new GridLayout(2, 1));
+                labelInputContainer.add(labelContainer);
+                labelInputContainer.add(inputContainer);
+
+                view.getFieldList().add(labelInputContainer);
+
+                view.getScreenContainer().add(labelInputContainer);
             }
 
             view.getSecondUpdate().addActionListener(view.getUpdateModelController());
